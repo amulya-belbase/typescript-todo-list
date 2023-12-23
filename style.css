@@ -1,0 +1,131 @@
+
+*{
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
+}
+body{
+    background-color: #f5f5f5;
+}
+.main_container{
+    /* background-color: aquamarine; */
+    width: 50%;
+    margin: auto;
+    margin-top: 50px;
+    box-shadow: 1px 2px 23px 5px rgba(0,0,0,0.75);
+    padding: 20px;
+    border-radius: 5px;
+}
+.main_container h1{
+    text-align: center;
+}
+.addBar{
+    display: flex;
+    position: relative;
+}
+.addBar button{
+    padding: 16px 50px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    background: #3fb8e7;
+    color: #fff;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+.addBar button:hover{
+    transition: ease-in-out 0.2s;
+    transform: scale(1.02);
+    background: #359CC4;
+}
+
+#task_input{
+    width: 100%;
+    padding: 15px;
+    font-size: 20px;
+    border: 2px solid #e9e9e9;
+    outline: none;
+    border-radius: 10px;
+    color: gray;
+}
+#task_input::placeholder{
+    font-size: 20px;
+}
+#task_input:hover,#task_input:focus{
+    transition: ease-in 0.2s;
+    border: 2px solid gray;
+}
+
+.top_container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    align-items: center;
+    border-bottom: 1px solid #858585;
+}
+.todo_header_tasks, .todo_header_completed, .todo_header_remaining{
+    font-size: 20px;
+    color: #858585;
+}
+.todo_header_tasks, .todo_header_completed, .todo_header_remaining{
+    padding: 10px;
+    padding-bottom: 10px;
+}
+.todo_header_tasks:hover{
+    border-bottom: 5px solid #f9aa6a;
+    cursor: pointer;
+    transition: ease-in 0.2s;
+}
+.todo_header_completed:hover{
+    border-bottom: 5px solid #55b58a;
+    cursor: pointer;
+    transition: ease-in 0.2s;
+}
+.todo_header_remaining:hover{
+    border-bottom: 5px solid #a875e8;
+    transition: ease-in 0.2s;
+    cursor: pointer;
+}
+.bottom_container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    color: white;
+    border-radius: 5px;
+}
+.tasks_details{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+}
+.left_todo{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.left_todo img{
+    display: flex;
+    align-items: center;
+}
+.left_todo img:hover{
+    cursor: pointer;
+}
+.right_todo{
+    display: flex;
+    gap: 20px;
+}
+.right_todo button{
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 15px;
+    border: 2px solid blue;
+}
+.right_todo button:hover{
+    cursor: pointer;
+}
