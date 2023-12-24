@@ -15,6 +15,18 @@ let allTasks = 0;
 let completedTasksNumber = 0;
 let remainingTaskNumber = 0;
 
+let bottomContainer: HTMLInputElement = document.querySelector(
+  ".bottom_container"
+) as HTMLInputElement;
+// if no tasks -> set these
+if (bottomContainer.innerHTML.trim() === '') {
+  const noItemTag = document.createElement('h2');
+  noItemTag.style.color = "black";
+  noItemTag.style.textAlign = "center";
+  noItemTag.innerHTML = "No Tasks Yet";
+  bottomContainer.appendChild(noItemTag);
+}
+
 // All Tasks counter -> changes the HTML element value
 allTasksNumber(allTasks);
 function allTasksNumber(allTasks: number) {
@@ -91,9 +103,6 @@ function addTasks() {
 
 function updateTask() {
   // for every add call, empty the bottom conainer to add new batch of tasks
-  let bottomContainer: HTMLInputElement = document.querySelector(
-    ".bottom_container"
-  ) as HTMLInputElement;
   bottomContainer.style.backgroundColor = "#f9aa6a";
   bottomContainer.innerHTML = "";
 
@@ -121,15 +130,28 @@ function updateTask() {
     newTaskEl.innerHTML = tasksList[i].taskName;
 
     let newTaskEdit = document.createElement("button");
+    newTaskEdit.setAttribute("id","editButton");
     newTaskEdit.innerHTML = "Edit";
+    newTaskEdit.onclick = () => {
+      let editText:HTMLInputElement = document.querySelector(".task") as HTMLInputElement;
+      const popupElement:HTMLInputElement = document.querySelector('.overlay') as HTMLInputElement;
+      popupElement.classList.add('show');
+      const editItem:HTMLInputElement = document.getElementById('editItem') as HTMLInputElement;
+      editItem.onclick = () => {
+        const editPopText:HTMLInputElement = document.getElementById('task_input_edit') as HTMLInputElement;
+        tasksList[i].taskName = editPopText.value;
+        editText.innerHTML = tasksList[i].taskName;
+        editPopText.value = '';
+        closePopup();
+        updateTask();
+      }
+    }
+    
     let newTaskDelete = document.createElement("button");
     newTaskDelete.innerHTML = "Delete";
     newTaskDelete.onclick = () => {
-      
       allTasks--;
       allTasksNumber(allTasks);
-
-
       if (remainingTasksList.some((task) => task.id === tasksList[i].id)) {
         const index = remainingTasksList.findIndex(
           (task) => task.id === tasksList[i].id
@@ -146,7 +168,6 @@ function updateTask() {
         completedTasksNumber--;
         completeTaskNumber(completedTasksNumber);
       }
-
       tasksList.splice(i,1);
       updateTask();
     }
@@ -177,6 +198,21 @@ function updateTask() {
         remainingTaskNumber--;
         remainingTasksNumber(remainingTaskNumber);
       }
+    }else{
+      if (completedTasksList.some((task) => task.id === tasksList[i].id)) {
+        const index = completedTasksList.findIndex(
+          (task) => task.id === tasksList[i].id
+        );
+        completedTasksNumber--;
+        completeTaskNumber(completedTasksNumber);
+        completedTasksList.splice(index, 1);
+      }
+
+      if (!remainingTasksList.some((task) => task.id === tasksList[i].id)) {
+        remainingTasksList.push(tasksList[i]);
+        remainingTaskNumber++;
+        remainingTasksNumber(remainingTaskNumber);
+      }
     }
     bottomContainer.appendChild(newTaskMainDiv);
   }
@@ -184,11 +220,8 @@ function updateTask() {
 
 
 function completedTasks() {
-  let bottomContainer: HTMLInputElement = document.querySelector(
-    ".bottom_container"
-  ) as HTMLInputElement;
   bottomContainer.innerHTML = "";
-  bottomContainer.style.backgroundColor = "green";
+  bottomContainer.style.backgroundColor = "#55b58a";
 
   for (let i = 0; i < completedTasksList.length; i++) {
     let newTaskMainDiv = document.createElement("div");
@@ -255,9 +288,6 @@ function completedTasks() {
 
 
 function remainingTasks() {
-  let bottomContainer: HTMLInputElement = document.querySelector(
-    ".bottom_container"
-  ) as HTMLInputElement;
   bottomContainer.innerHTML = "";
   bottomContainer.style.backgroundColor = "#a875e8";
 
@@ -280,8 +310,7 @@ function remainingTasks() {
     newTaskEl.setAttribute("class", "task");
     newTaskEl.innerHTML = remainingTasksList[i].taskName;
 
-    let newTaskEdit = document.createElement("button");
-    newTaskEdit.innerHTML = "Edit";
+
     let newTaskDelete = document.createElement("button");
     newTaskDelete.innerHTML = "Delete";
     newTaskDelete.onclick = () => {
@@ -303,7 +332,6 @@ function remainingTasks() {
     newTaskLeftDiv.appendChild(newTaskImg);
     newTaskLeftDiv.appendChild(newTaskEl);
 
-    newTaskRightDiv.appendChild(newTaskEdit);
     newTaskRightDiv.appendChild(newTaskDelete);
 
     newTaskMainDiv.appendChild(newTaskLeftDiv);
@@ -345,4 +373,10 @@ function getRandomString(length: number): string {
   }
 
   return output;
+}
+
+// To close the popup
+function closePopup(){
+  const popupElement:HTMLInputElement = document.querySelector('.overlay') as HTMLInputElement;
+  popupElement.classList.remove('show');
 }
