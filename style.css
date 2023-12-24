@@ -79,16 +79,19 @@ body{
     border-bottom: 5px solid #f9aa6a;
     cursor: pointer;
     transition: ease-in 0.2s;
+    color: #f9aa6a;
 }
 .todo_header_completed:hover{
     border-bottom: 5px solid #55b58a;
     cursor: pointer;
     transition: ease-in 0.2s;
+    color: #55b58a;
 }
 .todo_header_remaining:hover{
     border-bottom: 5px solid #a875e8;
     transition: ease-in 0.2s;
     cursor: pointer;
+    color: #a875e8;
 }
 .bottom_container{
     display: flex;
